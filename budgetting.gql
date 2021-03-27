@@ -1,0 +1,42 @@
+scalar Date
+
+type User {
+  emailAddress: String!
+  hashword: String!
+  expenses: [Expense!]!
+  fundingSchedules: [FundingSchedule!]!
+}
+
+enum SavingFrequency {
+  WEEKLY
+  BIWEEKLY
+  MONTHLY
+}
+
+enum SpendingFrequency {
+  DAILY
+  WEEKLY
+  BIWEEKLY
+  MONTHLY
+  BIMONTHLY
+  TRIMONTHLY
+  SEMIANNUALLY
+  ANNUALLY
+}
+
+type FundingSchedule {
+  name: String!
+  savingFrequency: SavingFrequency!
+  startDate: Date!
+  lastSaveDate: Date
+}
+
+type Expense {
+  name: String!
+  amount: Float!
+  currentValue: Float!
+  spendingFrequency: SpendingFrequency!
+  spendFrom: String
+  fundingSchedule: FundingSchedule
+  lastFundDate: Date
+}
