@@ -1,7 +1,3 @@
-type UntitledModel @model @auth(rules: [{ allow: public }]) {
-  id: ID!
-}
-
 # type User @model @auth(rules: [{ allow: public }]) {
 #   emailAddress: String!
 #   hashword: String!
@@ -27,6 +23,7 @@ enum SpendingFrequency {
 }
 
 type FundingSchedule @model @auth(rules: [{ allow: public }]) {
+  id: ID!
   name: String!
   savingFrequency: SavingFrequency!
   startDate: AWSDate!
@@ -34,6 +31,7 @@ type FundingSchedule @model @auth(rules: [{ allow: public }]) {
 }
 
 type Expense @model @auth(rules: [{ allow: public }]) {
+  id: ID!
   name: String!
   amount: Float!
   currentValue: Float!
