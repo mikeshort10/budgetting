@@ -39,47 +39,49 @@ const ExpensesPage = () => {
 
   return (
     <div className="bg-gray-800 min-h-screen">
-      <div
-        className={`${
-          showModal != null ? "" : "hidden"
-        } fixed top-0 z-50 bg-blue-100 w-screen h-screen`}
-      >
-        {showModal != null && (
-          <EditExpense
-            closeModal={() => setShowModal(undefined)}
-            key={expenses[showModal]?.id}
-            {...expenses[showModal]}
-            setExpense={setExpense(showModal)}
-            fundingSchedules={fundingSchedules}
-          />
-        )}
-      </div>
-      <div className="px-4 py-2">
-        <div className="my-3 rounded bg-blue-800 text-white py-4 px-8 text-right text-xl">
-          Spend Safe: {formatCurrency(getSpendSafe(totalInAccount, expenses))}
-          <p className="text-sm text-gray-300 pt-2">Money Out: $0.00</p>
-        </div>
-
-        {showModal == null &&
-          expenses.map((expense, i) => {
-            const deleteExpense = deleteExpenseAt(i);
-            return (
-              <Expense
-                key={expense.id}
-                {...expense}
-                deleteExpense={deleteExpense}
-                editExpense={() => setShowModal(i)}
-                setExpense={setExpense(i)}
-              />
-            );
-          })}
-        <button
-          type="button"
-          onClick={addNewExpense}
-          className="py-2 mt-3 w-full bg-blue-800 text-white"
+      <div className="max-w-4xl mx-auto">
+        <div
+          className={`${
+            showModal != null ? "" : "hidden"
+          } fixed top-0 z-50 bg-blue-100 w-full max-w-5xl`}
         >
-          Add Expense
-        </button>
+          {showModal != null && (
+            <EditExpense
+              closeModal={() => setShowModal(undefined)}
+              key={expenses[showModal]?.id}
+              {...expenses[showModal]}
+              setExpense={setExpense(showModal)}
+              fundingSchedules={fundingSchedules}
+            />
+          )}
+        </div>
+        <div className="px-4 py-2">
+          <div className="my-3 rounded bg-blue-800 text-white py-4 px-8 text-right text-xl">
+            Spend Safe: {formatCurrency(getSpendSafe(totalInAccount, expenses))}
+            <p className="text-sm text-gray-300 pt-2">Money Out: $0.00</p>
+          </div>
+
+          {showModal == null &&
+            expenses.map((expense, i) => {
+              const deleteExpense = deleteExpenseAt(i);
+              return (
+                <Expense
+                  key={expense.id}
+                  {...expense}
+                  deleteExpense={deleteExpense}
+                  editExpense={() => setShowModal(i)}
+                  setExpense={setExpense(i)}
+                />
+              );
+            })}
+          <button
+            type="button"
+            onClick={addNewExpense}
+            className="py-2 mt-3 w-full bg-blue-800 text-white"
+          >
+            Add Expense
+          </button>
+        </div>
       </div>
     </div>
   );
