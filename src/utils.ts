@@ -24,9 +24,9 @@ export const formatCurrency = (value: number) => "$" + value.toFixed(2);
 
 export const getFrequency = (f: SavingFrequency) => {
   const enumToText: Record<SavingFrequency, string> = {
-    WEEKLY: "Every Week",
-    BIWEEKLY: "Every Other Week",
-    MONTHLY: "Every Monthly",
+    WEEKLY: "Week",
+    BIWEEKLY: "Other Week",
+    MONTHLY: "Monthly",
   };
   return `Every ${enumToText[f]}`;
 };
@@ -66,21 +66,17 @@ export const getNextDate = (f: FundingSchedule) => {
   return enumToNum[f.savingFrequency](f.lastSaveDate);
 };
 
-export const nextSpend = (f: FundingSchedule, startDate: Date) => {
-  console.log(startDate);
-  if (new Date() < startDate) {
-    return startDate;
-  }
-  return getNextDate(f);
-};
+export const nextSpend = (f: FundingSchedule, startDate: Date) =>
+  new Date() < startDate ? startDate : getNextDate(f);
 
-export const removeAt = (i: number) => <A>(as: A[]) =>
-  pipe(
-    as,
-    A.deleteAt(i),
-    O.getOrElse(() => as),
-    (x) => (console.log(x), x)
-  );
+export const removeAt =
+  (i: number) =>
+  <A>(as: A[]) =>
+    pipe(
+      as,
+      A.deleteAt(i),
+      O.getOrElse(() => as)
+    );
 
 export const changeExpenseKey = (expense: E, setExpense: (e: E) => void) => {
   return (key: keyof E) => {
