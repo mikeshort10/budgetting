@@ -1,0 +1,44 @@
+type UntitledModel @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+}
+
+# type User @model @auth(rules: [{ allow: public }]) {
+#   emailAddress: String!
+#   hashword: String!
+#   expenses: [Expense!]!
+#   fundingSchedules: [FundingSchedule!]!
+# }
+
+enum SavingFrequency {
+  WEEKLY
+  BIWEEKLY
+  MONTHLY
+}
+
+enum SpendingFrequency {
+  DAILY
+  WEEKLY
+  BIWEEKLY
+  MONTHLY
+  BIMONTHLY
+  TRIMONTHLY
+  SEMIANNUALLY
+  ANNUALLY
+}
+
+type FundingSchedule @model @auth(rules: [{ allow: public }]) {
+  name: String!
+  savingFrequency: SavingFrequency!
+  startDate: AWSDate!
+  lastSaveDate: AWSDate
+}
+
+type Expense @model @auth(rules: [{ allow: public }]) {
+  name: String!
+  amount: Float!
+  currentValue: Float!
+  spendingFrequency: SpendingFrequency!
+  spendFrom: String
+  fundingSchedule: FundingSchedule
+  lastFundDate: AWSDate
+}
