@@ -1,27 +1,28 @@
 import React from "react";
-import { Expense as E, FundingSchedule } from "../types";
+import { Expense as Exp, FundingSchedule } from "../types";
 import { Expense } from "../components/Expense";
 import { EditExpense } from "../components/EditExpense";
 import { formatCurrency, getSpendSafe, removeAt } from "../src/utils";
 
 const ExpensesPage = () => {
   const [totalInAccount, setTotalInAccount] = React.useState(950);
-  const [expenses, setExpenses] = React.useState<E[]>([]);
   const [showModal, setShowModal] = React.useState<number>();
+  const [fundingSchedules, setFundingSchedules] = React.useState<
+    FundingSchedule[]
+  >([]);
+  const [expenses, setExpenses] = React.useState<Exp[]>([]);
 
-  const today = new Date();
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
 
-  const [fundingSchedules] = React.useState<FundingSchedule[]>([
-    {
-      id: Math.random(),
-      name: "Payday",
-      startDate: today,
-      lastSaveDate: yesterday,
-      savingFrequency: "BIWEEKLY",
-    },
-  ]);
+  React.useEffect(() => {
+    fetch("/api", {
+      method: "POST",
+      body: JSON.stringify({ queries: [{}] }),
+    })
+      .then((res) => res.json())
+      .then(setExpenses);
+  }, []);
 
   const addNewExpense = () => {
     setShowModal(expenses.length);
